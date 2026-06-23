@@ -53,9 +53,32 @@ app.use('/api/', (req, res, next) => {
 
 // ---------------------------------------------------------------------------
 // Статика: загруженные файлы (аватары) и клиентское приложение
+// На продакшне (за Nginx) Nginx раздаёт статику сам и сюда запросы не доходят.
+// При локальной разработке Node.js раздаёт с кэш-заголовками.
 // ---------------------------------------------------------------------------
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.static(path.join(__dirname, '..', 'client')));
+const staticOptions = {
+  maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+  etag: true,
+  lastModified: true,
+  setHeaders(res, filePath) {
+    // Аватары и иконки — 30 дней
+    if (/\/(uploads|icons)\//.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
+    }
+    // CSS/JS — 7 дней (версионируются через query-string при изменениях)
+    else if (/\.(css|js)$/.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=604800');
+    }
+    // HTML — не кэшировать
+    else if (/\.html$/.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  },
+};
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), staticOptions));
+app.use('/icons',   express.static(path.join(__dirname, '..', 'client', 'icons'), staticOptions));
+app.use(express.static(path.join(__dirname, '..', 'client'), staticOptions));
 
 // ---------------------------------------------------------------------------
 // API-маршруты
