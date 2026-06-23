@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кровавый Меридиан — игровой форум</title>
+<meta name="description" content="Игровой форум «Кровавый Меридиан»: обсуждай игры, находи друзей и делись опытом.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩸</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container">
+
+    <!-- ГЕРОЙ-БАННЕР -->
+    <section class="hero">
+      <span class="hero-eyebrow">⚔️ Добро пожаловать в сообщество</span>
+      <h1>Добро пожаловать на игровой форум</h1>
+      <p>Обсуждай игры, находи друзей и делись опытом на форуме «Кровавый Меридиан»</p>
+      <div class="hero-actions" id="hero-actions">
+        <!-- кнопки подставляются скриптом в зависимости от того, авторизован ли пользователь -->
+      </div>
+      <div class="stats-row" id="hero-stats">
+        <div class="stat-item"><div class="num" id="stat-users">—</div><div class="lab">Игроков</div></div>
+        <div class="stat-item"><div class="num" id="stat-topics">—</div><div class="lab">Тем</div></div>
+        <div class="stat-item"><div class="num" id="stat-posts">—</div><div class="lab">Сообщений</div></div>
+        <div class="stat-item"><div class="num" id="stat-online">—</div><div class="lab">Онлайн сейчас</div></div>
+      </div>
+    </section>
+
+    <!-- КАТЕГОРИИ -->
+    <h2 class="section-title"><span class="accent-bar"></span>Разделы форума</h2>
+    <p class="section-sub">Выбери раздел и присоединяйся к обсуждению</p>
+    <div class="grid grid-2" id="home-categories">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- НОВОСТИ -->
+    <div class="flex-between" style="margin-top:56px;">
+      <h2 class="section-title mt-0"><span class="accent-bar"></span>Свежие новости</h2>
+      <a class="btn btn-outline btn-sm" href="news.html">Все новости →</a>
+    </div>
+    <div class="grid grid-3" id="home-news">
+      <div class="spinner"></div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="app.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

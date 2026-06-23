@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личные сообщения — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container">
+    <h1 class="section-title"><span class="accent-bar"></span>Личные сообщения</h1>
+
+    <!-- Обёртка: grid на десктопе, стек на мобильном -->
+    <div class="messages-wrap">
+
+      <!-- Левая панель: список диалогов -->
+      <div class="conv-list" id="conv-list">
+        <div class="conv-list-head">Диалоги</div>
+        <div id="conv-list-body">
+          <div class="spinner"></div>
+        </div>
+      </div>
+
+      <!-- Правая панель: чат -->
+      <div class="chat-panel">
+        <div class="chat-head" id="chat-head">
+          <span style="color:var(--text-3);font-size:13.5px;">Выберите диалог, чтобы начать переписку</span>
+        </div>
+        <!-- Область сообщений — скролл только внутри, не растягивает страницу -->
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-empty">Здесь появятся сообщения</div>
+        </div>
+        <!-- Поле ввода всегда внизу -->
+        <form class="chat-input" id="chat-form" style="display:none;">
+          <input class="form-input" id="chat-text" placeholder="Напишите сообщение…" autocomplete="off">
+          <button type="submit" class="btn btn-primary btn-icon" aria-label="Отправить">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="js/messages.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Профиль — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container" style="max-width:860px;">
+
+    <!-- ===== БАННЕР + АВАТАР + ИНФО ===== -->
+    <div class="card" style="margin-bottom:20px;" id="profile-card">
+
+      <!-- Баннер (обложка профиля) -->
+      <div class="profile-cover" id="profile-cover">
+        <!-- Изображение баннера (если есть) -->
+        <img id="banner-img" class="profile-cover-img" src="" alt="" style="display:none;">
+        <div class="profile-cover-overlay"></div>
+        <!-- Кнопка смены баннера — показывается только Команде Проекта -->
+        <div class="profile-cover-edit" id="banner-edit-btn" style="display:none;">
+          <label class="btn btn-sm btn-outline" for="banner-file-input" style="cursor:pointer;backdrop-filter:blur(8px);">
+            📷 Сменить баннер
+          </label>
+          <button class="btn btn-sm btn-danger" id="banner-remove-btn" style="display:none;">✕</button>
+          <input type="file" id="banner-file-input" accept="image/png,image/jpeg,image/webp" style="display:none;">
+        </div>
+      </div>
+
+      <!-- Аватар + ник + статус -->
+      <div class="profile-header-body" id="profile-header-body">
+        <div class="spinner" style="margin:30px auto;"></div>
+      </div>
+
+      <!-- Статистика -->
+      <div class="profile-stats" id="profile-stats" style="display:none;">
+        <div class="stat-item"><div class="num" id="stat-reputation">0</div><div class="lab">Репутация</div></div>
+        <div class="stat-item"><div class="num" id="stat-topics">0</div><div class="lab">Тем</div></div>
+        <div class="stat-item"><div class="num" id="stat-posts">0</div><div class="lab">Сообщений</div></div>
+        <div class="stat-item"><div class="num" id="stat-joined">—</div><div class="lab">На форуме с</div></div>
+      </div>
+    </div>
+
+    <!-- ===== ВКЛАДКИ ===== -->
+    <div class="tab-bar" id="profile-tabs">
+      <button class="tab-btn active" data-tab="overview">Обзор</button>
+      <button class="tab-btn" data-tab="edit" id="tab-edit-btn" style="display:none;">Редактировать</button>
+      <button class="tab-btn" data-tab="security" id="tab-security-btn" style="display:none;">Безопасность</button>
+    </div>
+
+    <!-- Обзор -->
+    <div class="tab-panel active" id="panel-overview">
+      <div class="card card-pad" id="overview-content">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <!-- Редактирование -->
+    <div class="tab-panel" id="panel-edit">
+      <div class="card card-pad">
+        <!-- Аватар -->
+        <h3 style="margin-bottom:14px;">Аватар</h3>
+        <div class="row-flex" style="margin-bottom:26px;gap:16px;">
+          <img class="avatar avatar-lg" id="edit-avatar-preview" src="" alt="">
+          <div>
+            <label class="btn btn-outline btn-sm" for="avatar-file" style="cursor:pointer;">📷 Выбрать фото</label>
+            <input type="file" id="avatar-file" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;">
+            <div class="form-hint" style="margin-top:6px;">PNG, JPEG, WEBP или GIF, до 3 МБ</div>
+          </div>
+        </div>
+
+        <!-- Профиль -->
+        <form id="edit-profile-form">
+          <div class="form-group">
+            <label class="form-label">Никнейм</label>
+            <input class="form-input" id="edit-nickname" minlength="3" maxlength="20">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Статус <span style="color:var(--text-3);font-size:11.5px;">(отображается под ником)</span></label>
+            <input class="form-input" id="edit-status" maxlength="100" placeholder="Например: Иду на рейд">
+          </div>
+          <div class="form-group">
+            <label class="form-label">О себе <span style="color:var(--text-3);font-size:11.5px;">максимум 360 символов</span></label>
+            <textarea class="form-textarea" id="edit-about" maxlength="360" rows="5" placeholder="Расскажите немного о себе…"></textarea>
+            <div class="char-counter" id="about-counter">0 / 360</div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="edit-submit">Сохранить изменения</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Безопасность -->
+    <div class="tab-panel" id="panel-security">
+      <div class="card card-pad" style="max-width:440px;">
+        <h3 style="margin-bottom:16px;">Сменить пароль</h3>
+        <form id="password-form">
+          <div class="form-group">
+            <label class="form-label">Текущий пароль</label>
+            <input class="form-input" type="password" id="current-password" required autocomplete="current-password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Новый пароль</label>
+            <input class="form-input" type="password" id="new-password" required minlength="6" autocomplete="new-password">
+            <div class="form-hint">Минимум 6 символов</div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="password-submit">Изменить пароль</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

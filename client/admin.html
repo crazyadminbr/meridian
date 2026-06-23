@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админ-панель — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ────────────────────────────────────────────────────────────
+   Кастомный select для выбора роли — чтобы не было «белого» фона
+   (нативный <select> наследует системные стили и игнорирует
+   background и color в некоторых браузерах на Windows/Android)
+   ──────────────────────────────────────────────────────────── */
+.role-select-wrap { position:relative; display:inline-block; }
+.role-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(30,40,80,0.9);
+  color: var(--text-1);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 6px 32px 6px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  min-width: 140px;
+}
+.role-select-wrap select:focus {
+  border-color: var(--cyan);
+  outline: none;
+  background: rgba(45,212,255,0.07);
+}
+.role-select-wrap select option {
+  background: #0d1630;
+  color: var(--text-1);
+}
+.role-select-wrap::after {
+  content: '';
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--cyan);
+  margin-top: 3px;
+  pointer-events: none;
+}
+/* Блок тикета поддержки */
+.ticket-row { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; gap:14px; align-items:flex-start; cursor:pointer; transition:background .15s; }
+.ticket-row:hover { background:rgba(45,212,255,.05); }
+.ticket-row:last-child { border-bottom:none; }
+.ticket-body { flex:1; min-width:0; }
+.ticket-subject { font-weight:700; font-size:14.5px; margin-bottom:4px; }
+.ticket-meta { font-size:12px; color:var(--text-3); }
+.ticket-preview { font-size:13px; color:var(--text-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:5px; }
+/* Чат поддержки в администраторке */
+.support-layout { display:grid; grid-template-columns:360px 1fr; gap:20px; min-height:520px; }
+.support-ticket-list { border-right:1px solid var(--border); overflow-y:auto; max-height:620px; }
+.support-chat { display:flex; flex-direction:column; min-height:520px; }
+.support-chat-head { padding:16px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+.support-chat-messages { flex:1; min-height:0; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:10px; }
+.support-chat-foot { padding:14px 20px; border-top:1px solid var(--border); flex-shrink:0; }
+@media(max-width:700px){ .support-layout { grid-template-columns:1fr; } .support-ticket-list { border-right:none; border-bottom:1px solid var(--border); max-height:260px; } }
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container">
+    <h1 class="section-title"><span class="accent-bar"></span>Админ-панель</h1>
+    <p class="section-sub">Управление пользователями, темами, новостями и обращениями</p>
+
+    <div class="grid grid-4" id="admin-stats" style="margin-bottom:30px;">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="tab-bar" id="admin-tabs">
+      <button class="tab-btn active" data-tab="users">Пользователи</button>
+      <button class="tab-btn" data-tab="topics">Темы</button>
+      <button class="tab-btn" data-tab="news">Новости</button>
+      <button class="tab-btn" data-tab="support">Обращения <span class="icon-badge" id="support-unread-badge" style="position:static;display:none;background:var(--danger);">0</span></button>
+    </div>
+
+    <!-- ПОЛЬЗОВАТЕЛИ -->
+    <div class="tab-panel active" id="panel-users">
+      <div class="card table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Пользователь</th><th>Email</th><th>Роль</th><th>Статус</th><th>Регистрация</th><th>Действия</th></tr></thead>
+          <tbody id="admin-users-body"><tr><td colspan="6"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ТЕМЫ -->
+    <div class="tab-panel" id="panel-topics">
+      <div class="card table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Тема</th><th>Раздел</th><th>Автор</th><th>Создана</th><th>Статус</th><th>Действия</th></tr></thead>
+          <tbody id="admin-topics-body"><tr><td colspan="6"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="topics-pagination"></div>
+    </div>
+
+    <!-- НОВОСТИ -->
+    <div class="tab-panel" id="panel-news">
+      <div class="card card-pad" style="margin-bottom:20px;">
+        <h3 style="margin-bottom:14px;" id="news-form-title">Опубликовать новость</h3>
+        <form id="news-form">
+          <input type="hidden" id="news-edit-id">
+          <div class="form-group">
+            <label class="form-label">Заголовок</label>
+            <input class="form-input" id="news-title" required maxlength="200">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Текст новости</label>
+            <textarea class="form-textarea" id="news-content" rows="6" required></textarea>
+          </div>
+          <div class="row-flex">
+            <button type="submit" class="btn btn-primary" id="news-submit">Опубликовать</button>
+            <button type="button" class="btn btn-ghost" id="news-cancel-edit" style="display:none;">Отменить редактирование</button>
+          </div>
+        </form>
+      </div>
+      <div class="card table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Заголовок</th><th>Автор</th><th>Дата</th><th>Действия</th></tr></thead>
+          <tbody id="admin-news-body"><tr><td colspan="4"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ОБРАЩЕНИЯ В ПОДДЕРЖКУ -->
+    <div class="tab-panel" id="panel-support">
+      <div class="card" style="overflow:hidden;">
+        <div class="support-layout">
+          <!-- Список тикетов -->
+          <div class="support-ticket-list">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-sm btn-outline status-filter active" data-status="open">Новые</button>
+              <button class="btn btn-sm btn-outline status-filter" data-status="claimed">В работе</button>
+              <button class="btn btn-sm btn-outline status-filter" data-status="closed">Закрытые</button>
+              <button class="btn btn-sm btn-ghost status-filter" data-status="all">Все</button>
+            </div>
+            <div id="staff-tickets-list"><div class="spinner" style="margin:20px auto;"></div></div>
+          </div>
+          <!-- Чат с пользователем -->
+          <div class="support-chat" id="support-chat">
+            <div class="support-chat-head" id="support-chat-head">
+              <div style="color:var(--text-3);font-size:14px;">Выберите обращение слева</div>
+            </div>
+            <div class="support-chat-messages" id="support-chat-messages"></div>
+            <div class="support-chat-foot" id="support-chat-foot" style="display:none;">
+              <form id="staff-reply-form" style="display:flex;gap:10px;">
+                <input class="form-input" id="staff-reply-input" placeholder="Написать ответ…" autocomplete="off">
+                <button type="submit" class="btn btn-primary" style="white-space:nowrap;">Ответить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

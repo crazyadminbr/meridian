@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Новая тема — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Фикс "белого" select на Windows/Android:
+   нативный <select> на некоторых ОС игнорирует background/color из CSS,
+   поэтому используем appearance:none + ручное оформление. */
+.custom-select-wrap {
+  position: relative;
+  display: block;
+}
+.custom-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background: rgba(20, 30, 64, 0.85);
+  color: var(--text-1);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  padding: 13px 44px 13px 16px;
+  font-size: 14.5px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.custom-select-wrap select:focus {
+  border-color: var(--cyan);
+  background: rgba(45, 212, 255, 0.07);
+  outline: none;
+}
+.custom-select-wrap select option {
+  background: #0d1630;
+  color: var(--text-1);
+}
+.custom-select-wrap select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Стрелка вниз */
+.custom-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--cyan);
+  margin-top: 3px;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container" style="max-width:760px;">
+    <div class="breadcrumbs"><a href="index.html">Главная</a> / <a href="forum.html">Форум</a> / <span id="bc-category">…</span> / Новая тема</div>
+
+    <h1 class="section-title"><span class="accent-bar"></span>Создать новую тему</h1>
+
+    <form id="topic-form" class="card card-pad">
+      <div class="form-group">
+        <label class="form-label">Раздел форума</label>
+        <div class="custom-select-wrap">
+          <select id="topic-category" disabled></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Заголовок темы <span style="color:var(--text-3);font-size:11.5px;">макс. 200 символов</span></label>
+        <input class="form-input" type="text" id="topic-title" placeholder="О чём хотите поговорить?" required minlength="3" maxlength="200">
+        <div class="char-counter" id="title-counter">0 / 200</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Сообщение <span style="color:var(--text-3);font-size:11.5px;">макс. 1000 символов</span></label>
+        <textarea class="form-textarea" id="topic-content" rows="8" placeholder="Опишите подробнее…" required maxlength="1000"></textarea>
+        <div class="char-counter" id="content-counter">0 / 1000</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" id="topic-submit">Опубликовать тему</button>
+    </form>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="app.js"></script>
+<script src="js/new-topic.js"></script>
+</body>
+</html>

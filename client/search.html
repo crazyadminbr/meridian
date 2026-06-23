@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поиск — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container">
+    <h1 class="section-title"><span class="accent-bar"></span>Результаты поиска: «<span id="search-q"></span>»</h1>
+
+    <div class="form-group" style="max-width:420px;">
+      <input class="form-input" type="text" id="search-input" placeholder="🔍 Искать по форуму…">
+    </div>
+
+    <h3 style="margin:24px 0 12px;font-size:16px;color:var(--text-2);">Темы</h3>
+    <div class="card" id="search-topics"><div class="spinner"></div></div>
+
+    <h3 style="margin:28px 0 12px;font-size:16px;color:var(--text-2);">Сообщения</h3>
+    <div class="card" id="search-posts"></div>
+
+    <h3 style="margin:28px 0 12px;font-size:16px;color:var(--text-2);">Пользователи</h3>
+    <div class="grid grid-4" id="search-users"></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="app.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>

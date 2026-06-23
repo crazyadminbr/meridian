@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поддержка — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container" style="max-width:960px;">
+    <h1 class="section-title"><span class="accent-bar"></span>Поддержка</h1>
+
+    <!-- Вкладки: FAQ / Мои обращения / Создать обращение -->
+    <div class="tab-bar" id="support-tabs">
+      <button class="tab-btn active" data-tab="faq">Частые вопросы</button>
+      <button class="tab-btn" data-tab="my" id="tab-my-btn">Мои обращения</button>
+      <button class="tab-btn" data-tab="new">Создать обращение</button>
+    </div>
+
+    <!-- FAQ -->
+    <div class="tab-panel active" id="panel-faq">
+      <div class="grid grid-2" style="gap:14px;">
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">🔐 Не получил письмо подтверждения</h3>
+          <p style="color:var(--text-2);font-size:14px;">Проверьте папку «Спам». Если письма нет — создайте обращение в поддержку, указав свой email.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">🔑 Как восстановить пароль?</h3>
+          <p style="color:var(--text-2);font-size:14px;">Нажмите «Забыли пароль?» на странице входа. Ссылка для сброса действует 1 час.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">🛡️ Чем отличаются роли?</h3>
+          <p style="color:var(--text-2);font-size:14px;"><b>Пользователь</b> — обычный участник. <b>Модератор</b> — закрепляет/закрывает/удаляет темы. <b>Администратор</b> — управление форумом и пользователями. <b>Команда Проекта</b> — высший уровень доступа.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">⭐ Как работает репутация?</h3>
+          <p style="color:var(--text-2);font-size:14px;">Репутация растёт, когда другие участники ставят лайк вашим сообщениям.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">🚫 Меня заблокировали</h3>
+          <p style="color:var(--text-2);font-size:14px;">Создайте обращение в поддержку — мы рассмотрим ситуацию индивидуально.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin-bottom:8px;">💬 Разделы только для персонала</h3>
+          <p style="color:var(--text-2);font-size:14px;">«Новости проекта», «Помощь игрокам», «Гайды» — темы создаёт только персонал, но читать могут все.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОИ ОБРАЩЕНИЯ -->
+    <div class="tab-panel" id="panel-my">
+      <div id="my-tickets-list"><div class="spinner"></div></div>
+      <!-- Чат с тикетом -->
+      <div id="ticket-chat" style="display:none;margin-top:20px;">
+        <div class="card" style="overflow:hidden;">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div>
+              <span id="chat-ticket-subject" style="font-weight:700;font-size:16px;"></span>
+              <span id="chat-ticket-status" style="margin-left:10px;"></span>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="back-to-list">← Назад к списку</button>
+          </div>
+          <div id="chat-messages-box" style="padding:20px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;min-height:120px;"></div>
+          <div id="chat-reply-area" style="padding:16px;border-top:1px solid var(--border);">
+            <form id="chat-reply-form" style="display:flex;gap:10px;">
+              <input class="form-input" id="chat-reply-input" placeholder="Напишите сообщение…" autocomplete="off">
+              <button type="submit" class="btn btn-primary" style="white-space:nowrap;">Отправить</button>
+            </form>
+          </div>
+          <div id="chat-closed-notice" style="display:none;padding:14px 20px;color:var(--text-3);font-size:13.5px;border-top:1px solid var(--border);">
+            Обращение закрыто. Если вопрос остался — создайте новое обращение.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- НОВОЕ ОБРАЩЕНИЕ -->
+    <div class="tab-panel" id="panel-new">
+      <div class="card card-pad" style="max-width:560px;">
+        <h3 style="margin-bottom:16px;">Создать обращение</h3>
+        <form id="new-ticket-form">
+          <div class="form-group" id="guest-email-group" style="display:none;">
+            <label class="form-label">Ваш email (для ответа)</label>
+            <input class="form-input" type="email" id="ticket-guest-email" placeholder="ваш@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Тема обращения</label>
+            <input class="form-input" id="ticket-subject" maxlength="120" placeholder="Кратко опишите проблему" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Подробное описание</label>
+            <textarea class="form-textarea" id="ticket-message" rows="6" placeholder="Опишите ситуацию подробно…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" id="ticket-submit">Отправить обращение</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+<script src="app.js"></script>
+<script src="js/support.js"></script>
+</body>
+</html>

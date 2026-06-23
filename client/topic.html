@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Тема — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="container" style="max-width:880px;">
+    <div class="breadcrumbs"><a href="index.html">Главная</a> / <a href="forum.html">Форум</a> / <span id="bc-category">…</span></div>
+
+    <div class="card topic-header" id="topic-header">
+      <div class="spinner"></div>
+    </div>
+
+    <div id="posts-list">
+      <div class="spinner"></div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+
+    <div class="card reply-box" id="reply-box" style="display:none;">
+      <h3>💬 Оставить ответ</h3>
+      <div id="quote-preview"></div>
+      <form id="reply-form">
+        <div class="form-group">
+          <textarea class="form-textarea" id="reply-content" rows="5" placeholder="Напишите ваш ответ… (максимум 1000 символов)" required maxlength="1000"></textarea>
+          <div class="char-counter" id="reply-counter">0 / 1000</div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="reply-submit">Отправить ответ</button>
+      </form>
+    </div>
+    <div class="card card-pad text-center" id="reply-locked" style="display:none;">
+      <p style="color:var(--text-2);">Эта тема закрыта для новых ответов</p>
+    </div>
+    <div class="card card-pad text-center" id="reply-guest" style="display:none;">
+      <p style="color:var(--text-2);"><a href="login.html" style="color:var(--cyan);font-weight:700;">Войдите</a>, чтобы оставить ответ в этой теме</p>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="app.js"></script>
+<script src="js/topic.js"></script>
+</body>
+</html>

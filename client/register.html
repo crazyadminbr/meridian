@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Регистрация — Кровавый Меридиан</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <div class="auth-wrap">
+    <div class="card auth-card">
+      <h1>Создать аккаунт</h1>
+      <p class="sub">Присоединяйся к сообществу «Кровавого Меридиана»</p>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label">Никнейм</label>
+          <input class="form-input" type="text" id="reg-nickname" placeholder="Например, ШрамОхотник" required minlength="3" maxlength="20" autocomplete="username">
+          <div class="form-hint">3–20 символов: буквы, цифры, _ и -</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="reg-email" placeholder="ваш@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Пароль</label>
+          <input class="form-input" type="password" id="reg-password" placeholder="Минимум 6 символов" required minlength="6" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Повторите пароль</label>
+          <input class="form-input" type="password" id="reg-password2" placeholder="Повторите пароль" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="register-submit">Зарегистрироваться</button>
+      </form>
+
+      <div class="auth-foot">Уже есть аккаунт? <a href="login.html">Войти</a></div>
+    </div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="app.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>
